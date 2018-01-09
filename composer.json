@@ -1,6 +1,20 @@
 {
+    "name": "thesun2003/mycryptograph-api",
+    "description": "API for the MCG Application",
+    "keywords": [],
+    "homepage": "http://github.com/thesun2003/mycryptograph-api/",
+    "license": "",
+    "authors": [
+        {
+            "name": "Vladimir Semenov",
+            "email": "thesun2003@gmail.com"
+        }
+    ],
     "require": {
-        "rmccue/requests": "^1.7",
-        "slim/slim": "^3.0"
+        "php": ">=5.5.0",
+        "slim/slim": "^3.1",
+        "slim/php-view": "^2.0",
+        "monolog/monolog": "^1.17",
+        "rmccue/requests": "^1.7"
     }
 }

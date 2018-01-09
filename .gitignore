@@ -1,2 +1,3 @@
 .idea/*
 vendor/*
+src/local_settings.php
