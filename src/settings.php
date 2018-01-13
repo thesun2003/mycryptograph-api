@@ -1,5 +1,9 @@
 <?php
 
+if (file_exists(__DIR__ . '/local_settings.php')) {
+    include_once __DIR__ . '/local_settings.php';
+}
+
 $app_settings = [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production
@@ -20,15 +24,11 @@ $app_settings = [
         // API
         'api' => [
             'poloniex' => [
-                'public_key' => 'XXX',
-                'private_key' => 'XXX',
+                'public_key' => getenv('POLONIEX_API_KEY') ?? 'XXX',
+                'private_key' => getenv('POLONIEX_SECRET') ?? 'XXX',
             ]
         ]
     ],
 ];
-
-if (file_exists(__DIR__ . '/local_settings.php')) {
-    include_once __DIR__ . '/local_settings.php';
-}
 
 return $app_settings;
