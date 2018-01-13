@@ -35,10 +35,10 @@ class ApiController
     }
 
     public function getTotalBalances($request, $response, $args)
-    {
+    {        
         $api = $this->_getPoloniexAPI();
 
-        $data = $api->get_total_balance();
+        $data = $api->get_total_balances();
         return $response->withJson($data);
     }
 

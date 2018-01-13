@@ -20,7 +20,7 @@ class PoloniexAPI {
 
         // generate a nonce to avoid problems with 32bit systems
         $mt = explode(' ', microtime());
-        $req['nonce'] = $mt[1].substr($mt[0], 2, 6);
+        $req['nonce'] = $mt[1].substr($mt[0], 2, 6).'000';
 
         // generate the POST data string
         $post_data = http_build_query($req, '', '&');
@@ -235,7 +235,7 @@ class PoloniexAPI {
         return $ex_rates['last'];
     }
 
-    public function get_total_balance() {
+    public function get_total_balances() {
         $balances = $this->get_all_balances('all');
         $ex_rates = $this->get_current_rate('USDT_BTC');
 
