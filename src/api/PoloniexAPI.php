@@ -20,7 +20,7 @@ class PoloniexAPI {
 
         // generate a nonce to avoid problems with 32bit systems
         $mt = explode(' ', microtime());
-        $req['nonce'] = $mt[1].substr($mt[0], 2, 6).'000';
+        $req['nonce'] = $mt[1].substr($mt[0], 2, 6);
 
         // generate the POST data string
         $post_data = http_build_query($req, '', '&');
