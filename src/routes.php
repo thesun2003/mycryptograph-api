@@ -7,6 +7,11 @@ use api\PoloniexAPI;
 
 class ApiController
 {
+    // TODO: move to an appropriate place
+    const BTC_VALUE = 'btcValue';
+    const USD_VALUE = 'usdValue';
+    const TOKEN_VALUE = 'tokenValue';
+
     protected $container;
     protected $db = [];
 
@@ -34,11 +39,44 @@ class ApiController
         return $api;
     }
 
+    private function getTotals($balances) {
+        $data = [
+            self::BTC_VALUE => 0.0,
+            self::USD_VALUE => 0.0,
+        ];
+
+        foreach ($balances as $currency => $balance) {
+            $data[self::BTC_VALUE] += $balance[self::BTC_VALUE];
+            $data[self::USD_VALUE] += $balance[self::USD_VALUE];
+        }
+
+        return $data;
+    }
+
+    private function getPercentage($piece, $total) {
+        return (floatval($piece) / floatval($total)) * 100;
+    }
+
+    private function updateBalancesData($balances, $totals) {
+        foreach ($balances as $currency => &$balance) {
+            $balance['proportion'] = $this->getPercentage($balance[self::BTC_VALUE], $totals[self::BTC_VALUE]);
+        }
+
+        return $balances;
+    }
+
     public function getTotalBalances($request, $response, $args)
     {        
         $api = $this->_getPoloniexAPI();
 
-        $data = $api->get_total_balances();
+        $totalBalances = $api->get_total_balances();
+        $totals = $this->getTotals($totalBalances);
+
+        $data = [
+            'currencies' => $this->updateBalancesData($totalBalances, $totals),
+            'totals' => $totals,
+        ];
+
         return $response->withJson($data);
     }
 
