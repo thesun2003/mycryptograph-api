@@ -243,7 +243,9 @@ class PoloniexAPI {
         foreach ($balances as $coin => $balance) {
             $amount = $balance['available'] + $balance['onOrders'];
             if ($amount > 0) {
-                $balance['USDT_BTC'] = $ex_rates;
+                $balance['totalAmount'] = floatval($amount);
+                $balance['USDT_BTC'] = floatval($ex_rates);
+                $balance['usdValue'] = floatval($ex_rates * $balance['btcValue']);
                 $not_empty_balances[$coin] = $balance;
             }
         }
