@@ -241,6 +241,10 @@ class PoloniexAPI {
 
         $not_empty_balances = [];
         foreach ($balances as $coin => $balance) {
+            if (empty($balance['available'])) {
+                continue;
+            }
+
             $amount = $balance['available'] + $balance['onOrders'];
             if ($amount > 0) {
 
